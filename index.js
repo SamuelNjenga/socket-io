@@ -12,6 +12,11 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("a user connected");
+
+  // Each socket also fires a special disconnect event
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
 });
 
 server.listen(3000, () => {
