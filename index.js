@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/main/index.html");
 });
 
 io.on("connection", (socket) => {
@@ -26,8 +26,18 @@ io.on("connection", (socket) => {
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
   });
+
+  // handle the event sent with socket.emit()
+  socket.on("salutations", (elem1, elem2, elem3) => {
+    console.log("Salutations", elem1, elem2, elem3);
+  });
+
+  // handle the event sent with socket.send()
+  socket.on("message", (data) => {
+    console.log(data);
+  });
 });
 
-server.listen(3000, () => {
-  console.log("listening on *:3000");
+server.listen(5000, () => {
+  console.log("listening on *:5000");
 });
